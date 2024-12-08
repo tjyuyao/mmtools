@@ -1,5 +1,5 @@
 """
-    Setup file for mmcv_helper.
+    Setup file for mmtools.
     Use setup.cfg to configure your project.
 
     This file was generated with PyScaffold 4.6.

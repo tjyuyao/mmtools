@@ -1,8 +1,8 @@
 ===========
-mmcv_helper
+mmtools
 ===========
 
-This is the documentation of **mmcv_helper**.
+This is the documentation of **mmtools**.
 
 .. note::
 

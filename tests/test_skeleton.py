@@ -1,6 +1,6 @@
 import pytest
 
-from mmcv_helper.skeleton import fib, main
+from mmtools.skeleton import fib, main
 
 __author__ = "Yuyao Huang"
 __copyright__ = "Yuyao Huang"
