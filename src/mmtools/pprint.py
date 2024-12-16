@@ -1,8 +1,13 @@
 from rich.pretty import pprint as _rich_pprint   
 
+
+class _direct_print_no_repr(str):
+    def __repr__(self):
+        return self
+
 # (types, repr)
 custom_repr = [
-    ((int, float, str), str),
+    ((int, float, str), _direct_print_no_repr),
 ]
 
 # (types)
@@ -31,7 +36,7 @@ def _apply(x, f):
 
     if isinstance(x, tuple(custom_list)):
         if len(x) and sum([isinstance(xi, (str, int, float)) for xi in x]) == len(x):
-            return str(f"[{repr(x[0])}, ...]")
+            return _direct_print_no_repr(f"[{repr(x[0])}, ...]")
         return x.__class__([_apply(xi, f) for xi in x])
 
     if not isinstance(x, dict):
@@ -48,9 +53,9 @@ def _apply(x, f):
     try:
         return f(x)
     except TypeError:
-        return str(f"Unknown type: <{type(x).__name__}>")
+        return _direct_print_no_repr(f"Unknown type: <{type(x).__name__}>")
     except Exception as e:
-        return str(f"<{e}>")
+        return _direct_print_no_repr(f"<{e}>")
 
 
 def _has_method(obj, methodname) -> bool:
@@ -61,7 +66,7 @@ try:
     from torch import Tensor
     def _pprint_tensor(x):
         dtype = str(x.dtype).replace("torch.", "")
-        return str(f"Tensor({tuple(x.shape)}, {dtype})")
+        return _direct_print_no_repr(f"Tensor({tuple(x.shape)}, {dtype})")
     custom_repr.append((Tensor, _pprint_tensor))
 except ImportError:
     pass
@@ -71,7 +76,7 @@ try:
     from numpy import ndarray
     def _pprint_ndarray(x):
         dtype = str(x.dtype)
-        return str(f"ndarray({tuple(x.shape)}, {dtype})")
+        return _direct_print_no_repr(f"ndarray({tuple(x.shape)}, {dtype})")
     custom_repr.append((ndarray, _pprint_ndarray))
 except ImportError:
     pass
